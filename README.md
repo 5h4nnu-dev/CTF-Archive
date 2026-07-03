@@ -1,16 +1,51 @@
-# React + Vite
+# THM Writeups
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A React-based blog for publishing and browsing TryHackMe CTF walkthroughs. Built with Vite.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Writeup Browsing** — Responsive card grid listing all writeups with title, description, difficulty badge, tags, and date.
+- **Full-Text Search** — Search across writeup titles, descriptions, and tags with a live search bar.
+- **Difficulty & Tag Filtering** — Filter writeups by difficulty (Easy, Medium, Hard, Insane) and by tag. Multiple tags can be combined.
+- **Writeup Detail View** — Full-screen markdown-rendered view of each writeup with syntax-highlighted code blocks and back navigation.
+- **Create New Writeups** — In-app form to author new writeups with frontmatter metadata (title, description, difficulty, date, tags) and markdown content.
+- **Local Persistence** — Custom writeups are saved to `localStorage` and persist across sessions.
+- **Download as Markdown** — Export any writeup as a `.md` file with proper YAML frontmatter.
+- **Color-Coded Difficulty Badges** — Each difficulty level has a distinct color (Easy = green, Medium = orange, Hard = red, Insane = purple).
+- **Dark Theme UI** — Modern dark-themed design with glassmorphism navbar, smooth transitions, and responsive layout.
+- **Markdown from File** — Writeups are loaded from `src/writeups/*.md` files using Vite's `import.meta.glob` with frontmatter parsing.
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **React 19** — UI framework
+- **Vite 8** — Build tool with HMR and Oxlint
+- **react-markdown** — Markdown rendering
+- **Lucide React** — Icon library
+- **front-matter** — Frontmatter parsing
 
-## Expanding the Oxlint configuration
+## Getting Started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+```bash
+npm install
+npm run dev
+```
+
+## Build
+
+```bash
+npm run build
+npm run preview
+```
+
+## Project Structure
+
+```
+src/
+├── assets/          # Static images
+├── components/      # React components (Navbar, WriteupList, WriteupCard, etc.)
+├── writeups/        # Markdown writeup files with YAML frontmatter
+├── App.jsx          # Main app with routing logic
+├── App.css          # All styles
+├── index.css        # Global reset
+└── main.jsx         # Entry point
+```
