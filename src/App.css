@@ -517,6 +517,43 @@ a {
   line-height: 1.6;
 }
 
+.markdown-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+
+.markdown-body th,
+.markdown-body td {
+  border: 1px solid var(--border);
+  padding: 10px 14px;
+  text-align: left;
+}
+
+.markdown-body th {
+  background: var(--bg-card);
+  font-weight: 600;
+  color: #fff;
+}
+
+.markdown-body td {
+  background: transparent;
+}
+
+.markdown-body tr:nth-child(even) td {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.markdown-body img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  margin: 20px 0;
+  display: block;
+}
+
 /* ===========================
    Responsive
    =========================== */

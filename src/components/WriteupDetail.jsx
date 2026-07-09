@@ -1,5 +1,6 @@
 import { ArrowLeft, Calendar } from "lucide-react";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import DifficultyBadge from "./DifficultyBadge";
 
 export default function WriteupDetail({ writeup, onBack }) {
@@ -33,6 +34,7 @@ export default function WriteupDetail({ writeup, onBack }) {
 
       <div className="detail-body markdown-body">
         <ReactMarkdown
+          remarkPlugins={[remarkGfm]}
           components={{
             code({ className, children, ...props }) {
               const isInline = !className;
