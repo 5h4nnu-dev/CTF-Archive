@@ -8,6 +8,8 @@ date: "2026-07-04"
 
 ## Overview
 
+![Brooklyn Nine Nine banner](/assets/screenshots/brooklyn99/brooklyn99.jpg)
+
 Brooklyn Nine Nine is a TryHackMe boot2root machine themed around the TV show. It offers two independent paths to compromise the target — one through SSH brute forcing and another through image steganography. Both paths require basic enumeration and use GTFOBins for privilege escalation.
 
 ## Room Information
@@ -122,6 +124,8 @@ cat /root/root.txt
 ## Path 2 — Holt (Steganography)
 
 ### Extracting Hidden Data from the Image
+
+![brooklyn99.jpg](/assets/screenshots/brooklyn99/brooklyn99.jpg)
 
 Downloaded the image from the web server:
 
