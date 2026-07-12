@@ -8,6 +8,8 @@ date: "2026-07-04"
 
 ## Overview
 
+![Blaster room cover](/assets/screenshots/blaster/cover.png)
+
 Blaster is a Windows-based TryHackMe room that covers alternative exploitation without Metasploit. Enumeration of an IIS web server reveals a WordPress blog with credentials exposed in a comment. RDP access leads to a desktop executable that enables a UAC bypass via the Windows certificate dialog (CVE-2019-1388), granting SYSTEM privileges.
 
 ## Room Information
@@ -31,9 +33,13 @@ Two open ports were discovered on this Windows machine:
 | 80/tcp | HTTP | Microsoft IIS 10.0 |
 | 3389/tcp | RDP | Microsoft Terminal Services |
 
+![Nmap scan showing IIS and RDP](/assets/screenshots/blaster/nmap_scan.png)
+
 ### Web Enumeration
 
 The IIS web server showed a default page. Directory brute-forcing revealed a hidden WordPress site at `/retro`:
+
+![IIS web page](/assets/screenshots/blaster/webpage.png)
 
 ```bash
 gobuster dir -u http://10.49.130.99 -w /usr/share/wordlists/dirb/common.txt
@@ -46,6 +52,10 @@ Leaving myself a note here just in case I forget how to spell it: parzival
 ```
 
 The comment was left by Wade himself. "Parzival" is the avatar name of the protagonist Wade Watts in *Ready Player One* — this was the password.
+
+![Username discovered](/assets/screenshots/blaster/username.png)
+
+![Password discovered](/assets/screenshots/blaster/password.png)
 
 ## Initial Access — RDP
 

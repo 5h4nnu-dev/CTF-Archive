@@ -8,6 +8,8 @@ date: "2026-07-04"
 
 ## Overview
 
+![AttackerKB cover](/assets/screenshots/attackerkb/cover.png)
+
 AttackerKB is a TryHackMe room that teaches how to leverage the AttackerKB platform for researching exploits. The target runs Webmin 1.890, which was compromised in a supply chain attack — an unknown attacker inserted a backdoor into the `password_change.cgi` script. This allows unauthenticated command injection as root.
 
 ## Room Information
@@ -31,6 +33,8 @@ Two open ports were discovered:
 | 22/tcp | SSH | OpenSSH 7.6p1 Ubuntu |
 | 10000/tcp | HTTP | MiniServ 1.890 (Webmin httpd) |
 
+![Nmap showing Webmin on port 10000](/assets/screenshots/attackerkb/nmap_scan.png)
+
 ### Webmin Discovery
 
 Navigating to `https://10.49.168.190:10000` presented a Webmin login portal. The SSL certificate revealed the hostname `source`, which was added to `/etc/hosts`:
@@ -43,7 +47,11 @@ The service was identified as **Webmin 1.890** — a web-based system administra
 
 ### Research with AttackerKB
 
+![AttackerKB dashboard](/assets/screenshots/attackerkb/akb_dashboard.png)
+
 The room's namesake platform, AttackerKB, was used to research vulnerabilities in this version. Searching for "Webmin password_change.cgi" revealed **CVE-2019-15107**, a critical unauthenticated remote command execution vulnerability affecting Webmin through version 1.920.
+
+![Searching for Webmin on AttackerKB](/assets/screenshots/attackerkb/webmin_search.png)
 
 The backdoor was introduced via a **supply chain compromise** — an attacker breached Webmin's build server in April 2018 and inserted malicious Perl `qx()` statements into `password_change.cgi`. The timestamp was backdated to evade detection, and the tainted code was included in the official SourceForge release of version 1.890.
 
@@ -63,6 +71,8 @@ msf6 exploit(linux/http/webmin_backdoor) > run
 ```
 
 ### Root Shell
+
+![Webmin vulnerability assessment on AttackerKB](/assets/screenshots/attackerkb/webmin_assessment.png)
 
 The exploit succeeded immediately without authentication. The backdoored `password_change.cgi` script executes the `expired` POST parameter as a shell command via Perl's `qx()` operator:
 

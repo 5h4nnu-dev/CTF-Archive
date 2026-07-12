@@ -30,6 +30,8 @@ Only a single port was open:
 |------|---------|---------|
 | 80/tcp | HTTP | Apache 2.4.18 (Ubuntu) |
 
+![Nmap scan output](/assets/screenshots/dav/nmap_scan.png)
+
 The Apache default page was displayed. No other ports or services were exposed.
 
 ### Directory Brute-Forcing
@@ -42,6 +44,8 @@ gobuster dir -u http://10.48.157.14 -w /usr/share/wordlists/dirb/common.txt
 
 Found `/webdav` returning a **401 Unauthorized** status — it required HTTP Basic Authentication.
 
+![FFUF/Gobuster finding /webdav](/assets/screenshots/dav/ffuf_webdav.png)
+
 ### WebDAV Discovery
 
 WebDAV (Web Distributed Authoring and Versioning) is an HTTP extension that allows users to create, modify, and move files on a web server. The `/webdav` directory is a common feature in XAMPP installations, which ship with default credentials.
@@ -50,6 +54,8 @@ A quick search reveals the default WebDAV credentials for XAMPP:
 
 - **Username:** `wampp`
 - **Password:** `xampp`
+
+![WebDAV login page](/assets/screenshots/dav/webdav_login.png)
 
 Logging in revealed a single file: `passwd.dav`, containing a hashed password:
 
@@ -72,6 +78,8 @@ cadaver http://10.48.157.14/webdav
 dav:/webdav/> put /path/to/reverse-shell.php shell.php
 ```
 
+![Uploading reverse shell via cadaver](/assets/screenshots/dav/upload_webshell.png)
+
 The PHP reverse shell (from pentestmonkey) was configured with the attacker's IP and port.
 
 ### Triggering the Shell
@@ -88,7 +96,11 @@ Visited the uploaded script in a browser:
 http://10.48.157.14/webdav/shell.php
 ```
 
+![Webshell accessed in browser](/assets/screenshots/dav/rce_webshell.png)
+
 The connection came back as `www-data`.
+
+![Reverse shell connection](/assets/screenshots/dav/reverse_shell.png)
 
 ### User Flag
 
@@ -120,6 +132,8 @@ The `www-data` user could run `/bin/cat` as root with no password required.
 www-data@ubuntu:/$ sudo cat /root/root.txt
 101101ddc16b0cdf65ba0b8a7af7afa5
 ```
+
+![Root flag captured](/assets/screenshots/dav/root_flag.png)
 
 This same technique could be used to read any file on the system, including `/etc/shadow`, SSH private keys, or other sensitive data.
 

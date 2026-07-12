@@ -26,6 +26,8 @@ Started with an nmap scan to identify open ports and running services:
 nmap -sV -sC -oN nmap.txt 10.49.137.47
 ```
 
+![Nmap scan results showing FTP and SSH](/assets/screenshots/anonforce/nmap.png)
+
 The scan revealed two open ports:
 
 | Port | Service | Version |
@@ -64,6 +66,8 @@ get user.txt
 
 While exploring the filesystem via FTP, the `/notread` directory stood out. It contained two files:
 
+![FTP notread directory listing](/assets/screenshots/anonforce/ftp_notread.png)
+
 | File | Description |
 |------|-------------|
 | `private.asc` | PGP private key (passphrase-protected) |
@@ -85,11 +89,15 @@ The private key was encrypted with a passphrase. Used `gpg2john` to convert it i
 gpg2john private.asc > hash
 ```
 
+![Private key content](/assets/screenshots/anonforce/private_asc.png)
+
 This produced a hash JtR could crack. Ran John with the `rockyou.txt` wordlist:
 
 ```bash
 john hash --wordlist=/usr/share/wordlists/rockyou.txt
 ```
+
+![John the Ripper cracking the GPG passphrase](/assets/screenshots/anonforce/john_hashcat.png)
 
 The passphrase cracked almost instantly: **`xbox360`**
 
@@ -140,6 +148,8 @@ Once logged in as root, retrieved the final flag:
 ```bash
 cat /root/root.txt
 ```
+
+![Root flag captured](/assets/screenshots/anonforce/root_flag.png)
 
 **Root flag:** `f706456440c7af4187810c31c6cebdce`
 
