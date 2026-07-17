@@ -182,7 +182,15 @@ Include links to external resources used.
 
 Use screenshots from the room folder whenever available.
 
-Insert them naturally throughout the walkthrough.
+If the screenshots are not avalible in the folder, download photos from the websearched posts. 
+
+Insert them naturally throughout the walkthrough. Use the format:
+
+```markdown
+![Description](/assets/screenshots/<room>/<filename>)
+```
+
+Copy each screenshot to `public/assets/screenshots/<room>/` before referencing it.
 
 Do not omit useful screenshots.
 
