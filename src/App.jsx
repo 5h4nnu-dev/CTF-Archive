@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import WriteupList from "./components/WriteupList";
 import WriteupDetail from "./components/WriteupDetail";
 import NewWriteup from "./components/NewWriteup";
+import Achievements from "./components/Achievements";
 import "./App.css";
 
 const writeupFiles = import.meta.glob("./writeups/*.md", { query: "?raw", import: "default", eager: true });
@@ -50,6 +51,7 @@ export default function App() {
   const [writeups, setWriteups] = useState([]);
   const [selected, setSelected] = useState(null);
   const [showNew, setShowNew] = useState(false);
+  const [showAchievements, setShowAchievements] = useState(false);
 
   useEffect(() => {
     const fileWriteups = Object.values(writeupFiles)
@@ -73,10 +75,14 @@ export default function App() {
     setWriteups(all);
   };
 
+  if (showAchievements) {
+    return <Achievements onBack={() => setShowAchievements(false)} />;
+  }
+
   if (showNew) {
     return (
       <>
-        <Navbar onHome={() => { setShowNew(false); setSelected(null); }} />
+        <Navbar onHome={() => { setShowNew(false); setSelected(null); }} onAchievements={() => setShowAchievements(true)} />
         <main className="container">
           <NewWriteup
             onBack={() => setShowNew(false)}
@@ -96,6 +102,7 @@ export default function App() {
         <Navbar
           onHome={() => { setSelected(null); setShowNew(false); }}
           onNew={() => setShowNew(true)}
+          onAchievements={() => setShowAchievements(true)}
         />
         <main className="container">
           <WriteupDetail writeup={selected} onBack={() => setSelected(null)} />
@@ -107,8 +114,9 @@ export default function App() {
   return (
     <>
       <Navbar
-        onHome={() => { setSelected(null); setShowNew(false); }}
+        onHome={() => { setSelected(null); setShowNew(false); setShowAchievements(false); }}
         onNew={() => setShowNew(true)}
+        onAchievements={() => setShowAchievements(true)}
       />
       <main className="container">
         <WriteupList writeups={writeups} onSelect={setSelected} />

@@ -1,6 +1,6 @@
-import { Shield, Plus } from "lucide-react";
+import { Shield, Plus, Trophy } from "lucide-react";
 
-export default function Navbar({ onHome, onNew }) {
+export default function Navbar({ onHome, onNew, onAchievements }) {
   return (
     <nav className="navbar">
       <div className="navbar-inner">
@@ -9,6 +9,10 @@ export default function Navbar({ onHome, onNew }) {
           <span>THM Writeups</span>
         </button>
         <div className="navbar-actions">
+          <button className="navbar-achievements" onClick={onAchievements} title="Achievements">
+            <Trophy size={18} />
+            <span>Achievements</span>
+          </button>
           <button className="navbar-new" onClick={onNew} title="New Writeup">
             <Plus size={18} />
             <span>New</span>
