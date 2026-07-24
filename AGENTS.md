@@ -16,13 +16,13 @@ Your responsibility is to convert each CTF room folder into a complete blog post
 
 Location:
 
-~/kali/learn
+/run/media/shannu/KALI/home/shannu/learn/
 
 Every folder inside this directory represents one CTF room.
 
 Example:
 
-~/kali/learn/
+/run/media/shannu/KALI/home/shannu/learn/
 ├── AaronForce/
 ├── RootMe/
 ├── PickleRick/
