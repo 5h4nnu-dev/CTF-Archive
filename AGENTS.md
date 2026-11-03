@@ -59,11 +59,13 @@ For every requested room:
 
 3. Research missing information online.
 
-4. Merge local and online information.
+4. Add relavent images from the reserach done.
 
-5. Generate a complete walkthrough.
+5. Merge local and online information.
 
-6. Update the existing blog page using the project's current components and layout.
+6. Generate a complete walkthrough.
+
+7. Update the existing blog page using the project's current components and layout.
 
 ---
 
