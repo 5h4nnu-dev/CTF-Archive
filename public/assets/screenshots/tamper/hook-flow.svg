@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 430" width="900" height="430" role="img" aria-label="Diagram: sqlmap calls the tamper function before each payload-bearing request">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6366f1"/>
+    </marker>
+    <style>
+      .t { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+      .card { fill: #12121a; stroke: #1e1e2e; stroke-width: 1.5; }
+      .title { fill: #e4e4ef; font-size: 20px; font-weight: 600; }
+      .sub { fill: #8888a0; font-size: 13px; }
+      .step { fill: #6366f1; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; }
+      .head { fill: #e4e4ef; font-size: 15px; font-weight: 600; }
+      .body { fill: #a8a8bd; font-size: 12.5px; }
+      .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; font-size: 12px; fill: #c7c7dc; }
+    </style>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="899" height="429" rx="14" fill="#0f0f16" stroke="#1e1e2e"/>
+
+  <text class="t title" x="32" y="46">Where the tamper hook runs</text>
+  <text class="t sub" x="32" y="70">sqlmap calls every registered tamper function immediately before each payload-bearing request</text>
+
+  <!-- Card 1 -->
+  <rect class="card" x="32" y="96" width="192" height="148" rx="10"/>
+  <text class="t step" x="50" y="122">STEP 1</text>
+  <text class="t head" x="50" y="146">Build the request</text>
+  <text class="t body" x="50" y="174">Requested parameter is</text>
+  <text class="t body" x="50" y="192">replaced with the SQL</text>
+  <text class="t body" x="50" y="210">payload. A fresh dict</text>
+  <text class="t body" x="50" y="232">of headers is created:</text>
+  <text class="t mono" x="50" y="252">auxHeaders</text>
+
+  <!-- Card 2 -->
+  <rect class="card" x="246" y="96" width="204" height="148" rx="10" stroke="#6366f1"/>
+  <text class="t step" x="264" y="122">STEP 2</text>
+  <text class="t head" x="264" y="146">tamper() runs</text>
+  <text class="t body" x="264" y="174">POST /signup</text>
+  <text class="t body" x="264" y="192">POST /login</text>
+  <text class="t body" x="264" y="210">read session cookie</text>
+  <text class="t body" x="264" y="232">new account each time</text>
+
+  <!-- Card 3 -->
+  <rect class="card" x="472" y="96" width="192" height="148" rx="10"/>
+  <text class="t step" x="490" y="122">STEP 3</text>
+  <text class="t head" x="490" y="146">Mutate headers</text>
+  <text class="t mono" x="490" y="174">headers["Cookie"]</text>
+  <text class="t mono" x="490" y="192">  = session=…</text>
+  <text class="t body" x="490" y="218">Same dict sqlmap</text>
+  <text class="t body" x="490" y="236">will send, so the</text>
+  <text class="t body" x="490" y="254">change is visible</text>
+
+  <!-- Card 4 -->
+  <rect class="card" x="686" y="96" width="182" height="148" rx="10"/>
+  <text class="t step" x="704" y="122">STEP 4</text>
+  <text class="t head" x="704" y="146">Send</text>
+  <text class="t body" x="704" y="174">Payload plus the</text>
+  <text class="t body" x="704" y="192">new cookie reach</text>
+  <text class="t body" x="704" y="210">the authenticated</text>
+  <text class="t body" x="704" y="228">endpoint</text>
+
+  <!-- arrows -->
+  <line x1="224" y1="170" x2="240" y2="170" stroke="#6366f1" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="450" y1="170" x2="466" y2="170" stroke="#6366f1" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="664" y1="170" x2="680" y2="170" stroke="#6366f1" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- note -->
+  <rect x="32" y="272" width="836" height="96" rx="10" fill="#161622" stroke="#26263a"/>
+  <text class="t body" x="52" y="300">The function returns the payload unchanged, so the SQL is never rewritten. The plugin API is being used as a</text>
+  <text class="t body" x="52" y="320">generic pre-request hook: its job is to create the account, log in, and hand the resulting session to sqlmap.</text>
+  <text class="t body" x="52" y="348">Because this runs on every payload-bearing request, the session is refreshed even if it expires mid-scan.</text>
+
+  <text class="t sub" x="32" y="398">Figure 1 — the tamper hook as an authentication harness</text>
+</svg>

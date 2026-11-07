@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 360" width="900" height="360" role="img" aria-label="Diagram: a failed login is silently converted into an unauthenticated request, which sqlmap reports as not injectable">
+  <defs>
+    <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6366f1"/>
+    </marker>
+    <marker id="a2r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#f87171"/>
+    </marker>
+    <style>
+      .t { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+      .box { fill: #12121a; stroke: #1e1e2e; stroke-width: 1.5; }
+      .bad { fill: #1a1214; stroke: #f87171; stroke-width: 1.5; }
+      .good { fill: #12181a; stroke: #34d399; stroke-width: 1.5; }
+      .title { fill: #e4e4ef; font-size: 20px; font-weight: 600; }
+      .sub { fill: #8888a0; font-size: 13px; }
+      .label { fill: #e4e4ef; font-size: 13.5px; font-weight: 600; }
+      .body { fill: #a8a8bd; font-size: 12.5px; }
+      .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; font-size: 12px; fill: #c7c7dc; }
+      .ok { fill: #34d399; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; }
+      .no { fill: #f87171; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; }
+    </style>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="899" height="359" rx="14" fill="#0f0f16" stroke="#1e1e2e"/>
+
+  <text class="t title" x="32" y="46">The silent failure mode</text>
+  <text class="t sub" x="32" y="70">s.cookies.get("session", None) returns None when login does not succeed — and the script never checks</text>
+
+  <!-- happy path -->
+  <rect class="good" x="32" y="94" width="270" height="98" rx="10"/>
+  <text class="t ok" x="50" y="120">LOGIN SUCCEEDS</text>
+  <text class="t mono" x="50" y="146">session = "8f2c…"</text>
+  <text class="t body" x="50" y="170">Cookie header carries a real session</text>
+
+  <line x1="308" y1="143" x2="326" y2="143" stroke="#6366f1" stroke-width="2" marker-end="url(#a2)"/>
+
+  <rect class="box" x="332" y="94" width="228" height="98" rx="10"/>
+  <text class="t label" x="350" y="120">Authenticated request</text>
+  <text class="t body" x="350" y="146">Server evaluates the payload</text>
+  <text class="t body" x="350" y="166">sqlmap sees a difference</text>
+  <text class="t body" x="350" y="184">between true and false</text>
+
+  <line x1="566" y1="143" x2="584" y2="143" stroke="#6366f1" stroke-width="2" marker-end="url(#a2)"/>
+
+  <rect class="good" x="590" y="94" width="278" height="98" rx="10"/>
+  <text class="t ok" x="608" y="120">RESULT</text>
+  <text class="t body" x="608" y="146">Parameter is reported as</text>
+  <text class="t body" x="608" y="166">injectable and extraction</text>
+  <text class="t body" x="608" y="184">proceeds normally</text>
+
+  <!-- failure path -->
+  <rect class="bad" x="32" y="216" width="270" height="98" rx="10"/>
+  <text class="t no" x="50" y="242">LOGIN FAILS</text>
+  <text class="t mono" x="50" y="268">session = None</text>
+  <text class="t body" x="50" y="292">e.g. 409 duplicate, 403, 500</text>
+
+  <line x1="308" y1="265" x2="326" y2="265" stroke="#f87171" stroke-width="2" marker-end="url(#a2r)"/>
+
+  <rect class="bad" x="332" y="216" width="228" height="98" rx="10"/>
+  <text class="t label" x="350" y="242">Cookie: session=None</text>
+  <text class="t body" x="350" y="268">Treated as anonymous</text>
+  <text class="t body" x="350" y="288">server redirects to login</text>
+
+  <line x1="566" y1="265" x2="584" y2="265" stroke="#f87171" stroke-width="2" marker-end="url(#a2r)"/>
+
+  <rect class="bad" x="590" y="216" width="278" height="98" rx="10"/>
+  <text class="t no" x="608" y="242">RESULT</text>
+  <text class="t body" x="608" y="268">Every probe returns the same</text>
+  <text class="t body" x="608" y="288">page, so sqlmap reports the</text>
+  <text class="t body" x="608" y="306">parameter is not injectable</text>
+
+  <text class="t sub" x="32" y="342">Figure 2 — the failure is a wrong conclusion, not an error message</text>
+</svg>
