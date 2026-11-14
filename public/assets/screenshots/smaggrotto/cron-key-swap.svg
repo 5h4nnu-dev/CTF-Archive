@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 340" width="900" height="340" role="img" aria-label="Diagram: a root cron job copies a world-writable backup file over jake's authorized_keys">
+  <defs>
+    <marker id="arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6366f1"/>
+    </marker>
+    <style>
+      .t { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+      .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; }
+      .card { fill: #12121a; stroke: #1e1e2e; stroke-width: 1.5; }
+      .title { fill: #e4e4ef; font-size: 20px; font-weight: 600; }
+      .sub { fill: #8888a0; font-size: 13px; }
+      .step { fill: #6366f1; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; }
+      .head { fill: #e4e4ef; font-size: 14.5px; font-weight: 600; }
+      .body { fill: #a8a8bd; font-size: 12px; }
+      .path { fill: #c7c7dc; font-size: 11.5px; }
+    </style>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="899" height="339" rx="14" fill="#0f0f16" stroke="#1e1e2e"/>
+
+  <text class="t title" x="32" y="44">Why the cron job hands over jake's account</text>
+  <text class="t sub" x="32" y="68">A root-owned job re-applies a backup that any local user can rewrite</text>
+
+  <!-- Box 1 -->
+  <rect class="card" x="30" y="96" width="252" height="162" rx="10"/>
+  <text class="t step" x="48" y="120">1 · THE SOURCE</text>
+  <text class="t head" x="48" y="146">World-writable file</text>
+  <text class="t mono path" x="48" y="172">/opt/.backups/</text>
+  <text class="t mono path" x="48" y="189">jake_id_rsa.pub.backup</text>
+  <text class="t body" x="48" y="214">mode 666, owned by root</text>
+  <text class="t body" x="48" y="233">www-data can replace it</text>
+
+  <!-- Box 2 -->
+  <rect class="card" x="324" y="96" width="252" height="162" rx="10" stroke="#6366f1"/>
+  <text class="t step" x="342" y="120">2 · ROOT'S CRON JOB</text>
+  <text class="t head" x="342" y="146">Every minute</text>
+  <text class="t mono path" x="342" y="172">* * * * * root</text>
+  <text class="t mono path" x="342" y="189">cat backup &gt;</text>
+  <text class="t mono path" x="342" y="206">jake/.ssh/authorized_keys</text>
+  <text class="t body" x="342" y="233">the redirect truncates first</text>
+
+  <!-- Box 3 -->
+  <rect class="card" x="618" y="96" width="252" height="162" rx="10"/>
+  <text class="t step" x="636" y="120">3 · THE RESULT</text>
+  <text class="t head" x="636" y="146">jake's account</text>
+  <text class="t body" x="636" y="172">authorized_keys now holds</text>
+  <text class="t body" x="636" y="191">the attacker's public key</text>
+  <text class="t mono path" x="636" y="217">ssh -i key jake@smag</text>
+  <text class="t body" x="636" y="240">no password needed</text>
+
+  <line x1="284" y1="177" x2="320" y2="177" stroke="#6366f1" stroke-width="2" marker-end="url(#arrow2)"/>
+  <line x1="578" y1="177" x2="614" y2="177" stroke="#6366f1" stroke-width="2" marker-end="url(#arrow2)"/>
+
+  <text class="t body" x="32" y="298">Because the job runs as root, it can write inside jake's mode-700 .ssh directory even though www-data cannot.</text>
+  <text class="t body" x="32" y="318">The flawed trust is the source: a privileged job treats an untrusted, world-writable file as the source of truth.</text>
+</svg>
