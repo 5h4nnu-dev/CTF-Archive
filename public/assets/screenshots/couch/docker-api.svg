@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 340" width="900" height="340" role="img" aria-label="Diagram: why an unauthenticated Docker API on loopback is equivalent to root">
+  <defs>
+    <marker id="arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6366f1"/>
+    </marker>
+    <style>
+      .t { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+      .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; }
+      .card { fill: #12121a; stroke: #1e1e2e; stroke-width: 1.5; }
+      .title { fill: #e4e4ef; font-size: 20px; font-weight: 600; }
+      .sub { fill: #8888a0; font-size: 13px; }
+      .step { fill: #6366f1; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; }
+      .head { fill: #e4e4ef; font-size: 14.5px; font-weight: 600; }
+      .body { fill: #a8a8bd; font-size: 12px; }
+      .path { fill: #c7c7dc; font-size: 11.5px; }
+    </style>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="899" height="339" rx="14" fill="#0f0f16" stroke="#1e1e2e"/>
+
+  <text class="t title" x="32" y="44">Why 127.0.0.1:2375 is root</text>
+  <text class="t sub" x="32" y="68">The daemon runs as root and accepts unauthenticated HTTP; atena only has to reach the port</text>
+
+  <!-- Box 1 -->
+  <rect class="card" x="30" y="96" width="252" height="162" rx="10"/>
+  <text class="t step" x="48" y="120">1 · THE USER</text>
+  <text class="t head" x="48" y="146">atena, no docker group</text>
+  <text class="t mono path" x="48" y="172">ssh atena@target</text>
+  <text class="t mono path" x="48" y="189">ssh -L 2375:127.0.0.1:2375</text>
+  <text class="t body" x="48" y="214">a local forward reaches</text>
+  <text class="t body" x="48" y="233">the loopback-only port</text>
+
+  <!-- Box 2 -->
+  <rect class="card" x="324" y="96" width="252" height="162" rx="10" stroke="#6366f1"/>
+  <text class="t step" x="342" y="120">2 · THE DAEMON</text>
+  <text class="t head" x="342" y="146">dockerd as root</text>
+  <text class="t mono path" x="342" y="172">127.0.0.1:2375</text>
+  <text class="t body" x="342" y="197">plain HTTP, no TLS</text>
+  <text class="t body" x="342" y="216">no client authentication</text>
+  <text class="t body" x="342" y="235">creates containers as root</text>
+
+  <!-- Box 3 -->
+  <rect class="card" x="618" y="96" width="252" height="162" rx="10"/>
+  <text class="t step" x="636" y="120">3 · THE CONTAINER</text>
+  <text class="t head" x="636" y="146">host filesystem</text>
+  <text class="t mono path" x="636" y="172">-v /:/mnt</text>
+  <text class="t body" x="636" y="197">root inside is host root</text>
+  <text class="t body" x="636" y="216">reads /mnt/root/root.txt</text>
+  <text class="t mono path" x="636" y="242">chroot /mnt /bin/sh</text>
+
+  <line x1="284" y1="177" x2="320" y2="177" stroke="#6366f1" stroke-width="2" marker-end="url(#arrow2)"/>
+  <line x1="578" y1="177" x2="614" y2="177" stroke="#6366f1" stroke-width="2" marker-end="url(#arrow2)"/>
+
+  <text class="t body" x="32" y="298">The docker group protects /var/run/docker.sock, not this TCP listener. Any local user who can reach the port can use the API.</text>
+  <text class="t body" x="32" y="318">Unless user namespaces are enabled, a container's root is the host's root — and the host bind mount exposes the real filesystem.</text>
+</svg>
