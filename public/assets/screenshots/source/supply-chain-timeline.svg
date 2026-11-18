@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 330" width="900" height="330" role="img" aria-label="Timeline: Webmin build server compromise in 2018, backdoored SourceForge releases, discovery in 2019">
+  <defs>
+    <marker id="arrow3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6366f1"/>
+    </marker>
+    <style>
+      .t { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+      .card { fill: #12121a; stroke: #1e1e2e; stroke-width: 1.5; }
+      .title { fill: #e4e4ef; font-size: 20px; font-weight: 600; }
+      .sub { fill: #8888a0; font-size: 13px; }
+      .step { fill: #6366f1; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; }
+      .head { fill: #e4e4ef; font-size: 15px; font-weight: 600; }
+      .body { fill: #a8a8bd; font-size: 12.5px; }
+    </style>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="899" height="329" rx="14" fill="#0f0f16" stroke="#1e1e2e"/>
+
+  <text class="t title" x="32" y="44">How a trusted release became a backdoor</text>
+  <text class="t sub" x="32" y="68">The story behind the user flag's name</text>
+
+  <rect class="card" x="30" y="96" width="252" height="150" rx="10" stroke="#6366f1"/>
+  <text class="t step" x="48" y="120">APRIL 2018</text>
+  <text class="t head" x="48" y="146">Build server altered</text>
+  <text class="t body" x="48" y="172">line 12 changed</text>
+  <text class="t body" x="48" y="191">timestamp backdated</text>
+  <text class="t body" x="48" y="210">1.890 ships on SourceForge</text>
+  <text class="t body" x="48" y="229">default install exploitable</text>
+
+  <rect class="card" x="324" y="96" width="252" height="150" rx="10"/>
+  <text class="t step" x="342" y="120">JULY 2018</text>
+  <text class="t head" x="342" y="146">A second change</text>
+  <text class="t body" x="342" y="172">1.900-1.920 affected</text>
+  <text class="t body" x="342" y="191">old field variant</text>
+  <text class="t body" x="342" y="210">needs expired-password mode</text>
+  <text class="t body" x="342" y="229">GitHub tags stay clean</text>
+
+  <rect class="card" x="618" y="96" width="252" height="150" rx="10"/>
+  <text class="t step" x="636" y="120">AUGUST 2019</text>
+  <text class="t head" x="636" y="146">Discovery</text>
+  <text class="t body" x="636" y="172">issue #947 raised</text>
+  <text class="t body" x="636" y="191">CVE-2019-15107</text>
+  <text class="t body" x="636" y="210">official advisory</text>
+  <text class="t body" x="636" y="229">upgrade to 1.930</text>
+
+  <line x1="284" y1="171" x2="320" y2="171" stroke="#6366f1" stroke-width="2" marker-end="url(#arrow3)"/>
+  <line x1="578" y1="171" x2="614" y2="171" stroke="#6366f1" stroke-width="2" marker-end="url(#arrow3)"/>
+
+  <text class="t body" x="32" y="292">The project's download page linked to SourceForge tarballs, and those tarballs were the poisoned ones.</text>
+  <text class="t body" x="32" y="311">That broken chain of trust is what the room's user flag is pointing at.</text>
+</svg>
