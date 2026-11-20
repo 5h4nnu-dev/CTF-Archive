@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 350" width="900" height="350" role="img" aria-label="Diagram of the Room 404 attack path: scan port 8080, discover the exposed git directory, reconstruct the repository, read the staging flag">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6366f1"/>
+    </marker>
+    <style>
+      .t { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+      .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; }
+      .card { fill: #12121a; stroke: #1e1e2e; stroke-width: 1.5; }
+      .title { fill: #e4e4ef; font-size: 20px; font-weight: 600; }
+      .sub { fill: #8888a0; font-size: 13px; }
+      .step { fill: #6366f1; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; }
+      .head { fill: #e4e4ef; font-size: 14px; font-weight: 600; }
+      .body { fill: #a8a8bd; font-size: 12px; }
+      .path { fill: #c7c7dc; font-size: 11.5px; }
+    </style>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="899" height="349" rx="14" fill="#0f0f16" stroke="#1e1e2e"/>
+  <text class="t title" x="32" y="44">Room 404: the room that was not on the floor plan</text>
+  <text class="t sub" x="32" y="68">A published staging directory left its entire Git repository on a public web server</text>
+
+  <rect class="card" x="30" y="96" width="195" height="186" rx="10"/>
+  <text class="t step" x="48" y="120">01 · SCAN</text>
+  <text class="t head" x="48" y="146">Port 8080</text>
+  <text class="t body" x="48" y="172">Byte Lotus app</text>
+  <text class="t mono path" x="48" y="189">Werkzeug 3.0.1</text>
+  <text class="t body" x="48" y="214">nmap http-git</text>
+  <text class="t body" x="48" y="233">spots .git/</text>
+  <text class="t body" x="48" y="259">Landing page only</text>
+
+  <rect class="card" x="245" y="96" width="195" height="186" rx="10" stroke="#6366f1"/>
+  <text class="t step" x="263" y="120">02 · DISCOVER</text>
+  <text class="t head" x="263" y="146">Content discovery</text>
+  <text class="t body" x="263" y="172">gobuster / manual</text>
+  <text class="t mono path" x="263" y="189">.git/HEAD 200</text>
+  <text class="t body" x="263" y="214">Directory listing</text>
+  <text class="t body" x="263" y="233">is enabled</text>
+  <text class="t body" x="263" y="259">No login needed</text>
+
+  <rect class="card" x="460" y="96" width="195" height="186" rx="10"/>
+  <text class="t step" x="478" y="120">03 · RECONSTRUCT</text>
+  <text class="t head" x="478" y="146">Pull the repo</text>
+  <text class="t mono path" x="478" y="172">git-dumper</text>
+  <text class="t body" x="478" y="191">or wget mirror</text>
+  <text class="t mono path" x="478" y="216">git checkout .</text>
+  <text class="t body" x="478" y="243">README.md</text>
+  <text class="t body" x="478" y="259">app.js · index.html</text>
+
+  <rect class="card" x="675" y="96" width="195" height="186" rx="10" stroke="#6366f1"/>
+  <text class="t step" x="693" y="120">04 · FLAG</text>
+  <text class="t head" x="693" y="146">Staging note</text>
+  <text class="t body" x="693" y="172">Internal README</text>
+  <text class="t body" x="693" y="191">left the secret</text>
+  <text class="t mono path" x="693" y="216">THM{byt3_l0tus...</text>
+  <text class="t body" x="693" y="243">One flag</text>
+  <text class="t body" x="693" y="259">Room complete</text>
+
+  <line x1="227" y1="189" x2="241" y2="189" stroke="#6366f1" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="442" y1="189" x2="456" y2="189" stroke="#6366f1" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="657" y1="189" x2="671" y2="189" stroke="#6366f1" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <text class="t body" x="32" y="318">A public .git directory turns a quick git-pull deployment into a full source disclosure.</text>
+</svg>
