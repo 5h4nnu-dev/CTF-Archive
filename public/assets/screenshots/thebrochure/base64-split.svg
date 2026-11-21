@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 350" width="900" height="350" role="img" aria-label="Diagram showing three Base64 fragments from Vera's Instagram posts joined into one string and decoded into the flag">
+  <defs>
+    <marker id="arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6366f1"/>
+    </marker>
+    <style>
+      .t { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+      .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; }
+      .card { fill: #12121a; stroke: #1e1e2e; stroke-width: 1.5; }
+      .title { fill: #e4e4ef; font-size: 20px; font-weight: 600; }
+      .sub { fill: #8888a0; font-size: 13px; }
+      .step { fill: #6366f1; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; }
+      .body { fill: #a8a8bd; font-size: 12px; }
+      .path { fill: #c7c7dc; font-size: 11.5px; }
+      .joined { fill: #e4e4ef; font-size: 11px; }
+      .flag { fill: #c8f0d0; font-size: 14px; }
+    </style>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="899" height="349" rx="14" fill="#0f0f16" stroke="#1e1e2e"/>
+  <text class="t title" x="32" y="44">Three posts, one Base64 string</text>
+  <text class="t sub" x="32" y="68">The fragments must be joined left to right before decoding</text>
+
+  <rect class="card" x="30" y="100" width="248" height="86" rx="10"/>
+  <text class="t step" x="48" y="124">POST 1 · LEFT</text>
+  <text class="t mono path" x="48" y="155">VEhNe1YzckBzX2FD</text>
+  <text class="t body" x="48" y="175">16 characters</text>
+
+  <rect class="card" x="326" y="100" width="248" height="86" rx="10"/>
+  <text class="t step" x="344" y="124">POST 2 · MIDDLE</text>
+  <text class="t mono path" x="344" y="155">QzB1bnRfaDRzX2Iz</text>
+  <text class="t body" x="344" y="175">16 characters</text>
+
+  <rect class="card" x="622" y="100" width="248" height="86" rx="10"/>
+  <text class="t step" x="640" y="124">POST 3 · RIGHT</text>
+  <text class="t mono path" x="640" y="155">M25fZjB1bmQhfQ==</text>
+  <text class="t body" x="640" y="175">\"==\" padding</text>
+
+  <path d="M 154 188 L 154 205 Q 154 215 166 215 L 434 215" fill="none" stroke="#6366f1" stroke-width="2"/>
+  <path d="M 450 188 L 450 205" fill="none" stroke="#6366f1" stroke-width="2"/>
+  <path d="M 746 188 L 746 205 Q 746 215 734 215 L 466 215" fill="none" stroke="#6366f1" stroke-width="2"/>
+
+  <rect class="card" x="170" y="230" width="560" height="52" rx="10" stroke="#6366f1"/>
+  <text class="t joined" x="188" y="262">VEhNe1YzckBzX2FDQzB1bnRfaDRzX2IzM25fZjB1bmQhfQ==</text>
+
+  <line x1="450" y1="284" x2="450" y2="299" stroke="#6366f1" stroke-width="2" marker-end="url(#arrow2)"/>
+
+  <rect class="card" x="250" y="304" width="400" height="34" rx="8" stroke="#6366f1"/>
+  <text class="t mono flag" x="270" y="327">THM{V3r@s_aCC0unt_h4s_b33n_f0und!}</text>
+</svg>
