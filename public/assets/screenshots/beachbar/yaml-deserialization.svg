@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 340" width="900" height="340" role="img" aria-label="Diagram showing how an unsafe PyYAML loader turns a crafted playlist tag into command execution and reflects the output">
+  <defs>
+    <marker id="arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6366f1"/>
+    </marker>
+    <style>
+      .t { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+      .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; }
+      .card { fill: #12121a; stroke: #1e1e2e; stroke-width: 1.5; }
+      .title { fill: #e4e4ef; font-size: 20px; font-weight: 600; }
+      .sub { fill: #8888a0; font-size: 13px; }
+      .step { fill: #6366f1; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; }
+      .head { fill: #e4e4ef; font-size: 13.5px; font-weight: 600; }
+      .body { fill: #a8a8bd; font-size: 12px; }
+      .path { fill: #c7c7dc; font-size: 11.5px; }
+      .flagline { fill: #c8f0d0; font-size: 12px; }
+    </style>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="899" height="339" rx="14" fill="#0f0f16" stroke="#1e1e2e"/>
+  <text class="t title" x="32" y="44">Why the playlist became a shell command</text>
+  <text class="t sub" x="32" y="68">yaml.load(..., Loader=yaml.Loader) honours Python object tags; yaml.safe_load() would not</text>
+
+  <rect class="card" x="30" y="100" width="186" height="142" rx="10"/>
+  <text class="t step" x="48" y="124">INPUT</text>
+  <text class="t head" x="48" y="150">Playlist text</text>
+  <text class="t body" x="48" y="176">textarea or upload</text>
+  <text class="t mono path" x="48" y="193">playlist_file</text>
+  <text class="t body" x="48" y="219">Looks like a normal</text>
+  <text class="t body" x="48" y="236">.yml song list</text>
+
+  <rect class="card" x="240" y="100" width="186" height="142" rx="10" stroke="#6366f1"/>
+  <text class="t step" x="258" y="124">SINK</text>
+  <text class="t mono path" x="258" y="150">yaml.load()</text>
+  <text class="t mono path" x="258" y="169">Loader=yaml.Loader</text>
+  <text class="t body" x="258" y="195">Full loader allows</text>
+  <text class="t body" x="258" y="212">Python-specific tags</text>
+  <text class="t body" x="258" y="236">Not safe on input</text>
+
+  <rect class="card" x="450" y="100" width="186" height="142" rx="10"/>
+  <text class="t step" x="468" y="124">TAG</text>
+  <text class="t mono path" x="468" y="150">!!python/object/</text>
+  <text class="t mono path" x="468" y="169">apply</text>
+  <text class="t body" x="468" y="195">Import a callable</text>
+  <text class="t body" x="468" y="212">and call it with</text>
+  <text class="t body" x="468" y="236">supplied arguments</text>
+
+  <rect class="card" x="660" y="100" width="210" height="142" rx="10" stroke="#6366f1"/>
+  <text class="t step" x="678" y="124">RESULT</text>
+  <text class="t mono path" x="678" y="150">subprocess.check_output</text>
+  <text class="t mono path" x="678" y="169">[["id"]]</text>
+  <text class="t body" x="678" y="195">Runs as bartender</text>
+  <text class="t body" x="678" y="212">Output rendered in</text>
+  <text class="t mono path" x="678" y="236">&lt;pre&gt;...&lt;/pre&gt;</text>
+
+  <line x1="218" y1="171" x2="236" y2="171" stroke="#6366f1" stroke-width="2" marker-end="url(#arrow2)"/>
+  <line x1="428" y1="171" x2="446" y2="171" stroke="#6366f1" stroke-width="2" marker-end="url(#arrow2)"/>
+  <line x1="638" y1="171" x2="656" y2="171" stroke="#6366f1" stroke-width="2" marker-end="url(#arrow2)"/>
+
+  <rect class="card" x="170" y="270" width="560" height="48" rx="10"/>
+  <text class="t flagline" x="188" y="300">Fix: use yaml.safe_load() and validate the playlist schema before parsing it.</text>
+</svg>
