@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 360" width="900" height="360" role="img" aria-label="Diagram of the Do Not Disturb attack chain: NoSQL operator login bypass, EJS template injection, Node inspector code execution, and disk group raw file read">
+  <defs>
+    <marker id="dn-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6366f1"/>
+    </marker>
+    <style>
+      .t { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+      .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; }
+      .card { fill: #12121a; stroke: #1e1e2e; stroke-width: 1.5; }
+      .hot { stroke: #6366f1; }
+      .title { fill: #e4e4ef; font-size: 20px; font-weight: 600; }
+      .sub { fill: #8888a0; font-size: 13px; }
+      .step { fill: #6366f1; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; }
+      .head { fill: #e4e4ef; font-size: 14px; font-weight: 600; }
+      .body { fill: #a8a8bd; font-size: 12px; }
+      .path { fill: #c7c7dc; font-size: 11.5px; }
+    </style>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="899" height="359" rx="14" fill="#0f0f16" stroke="#1e1e2e"/>
+  <text class="t title" x="32" y="44">Do Not Disturb: from login bypass to raw disk read</text>
+  <text class="t sub" x="32" y="68">Four role transitions, no kernel exploit required</text>
+
+  <rect class="card hot" x="30" y="96" width="195" height="188" rx="10"/>
+  <text class="t step" x="48" y="120">01 · AUTH</text>
+  <text class="t head" x="48" y="146">nedb operator</text>
+  <text class="t mono path" x="48" y="172">password[$ne]=x</text>
+  <text class="t body" x="48" y="198">Known staff name,</text>
+  <text class="t body" x="48" y="217">unknown password</text>
+  <text class="t body" x="48" y="243">Session issued for</text>
+  <text class="t mono path" x="48" y="262">attendant</text>
+
+  <rect class="card" x="245" y="96" width="195" height="188" rx="10"/>
+  <text class="t step" x="263" y="120">02 · INJECT</text>
+  <text class="t head" x="263" y="146">EJS preview</text>
+  <text class="t mono path" x="263" y="172">&lt;%= 7*7 %&gt;</text>
+  <text class="t body" x="263" y="198">Template evaluates</text>
+  <text class="t body" x="263" y="217">server-side JS</text>
+  <text class="t mono path" x="263" y="243">child_process</text>
+  <text class="t body" x="263" y="262">RCE as poolside</text>
+
+  <rect class="card hot" x="460" y="96" width="195" height="188" rx="10"/>
+  <text class="t step" x="478" y="120">03 · PIVOT</text>
+  <text class="t head" x="478" y="146">Node inspector</text>
+  <text class="t mono path" x="478" y="172">127.0.0.1:9229</text>
+  <text class="t body" x="478" y="198">Runtime.evaluate</text>
+  <text class="t body" x="478" y="217">runs commands in</text>
+  <text class="t mono path" x="478" y="243">pipelinesvc</text>
+  <text class="t body" x="478" y="262">context</text>
+
+  <rect class="card" x="675" y="96" width="195" height="188" rx="10"/>
+  <text class="t step" x="693" y="120">04 · ROOT FILE</text>
+  <text class="t head" x="693" y="146">disk group</text>
+  <text class="t mono path" x="693" y="172">gid 6 (disk)</text>
+  <text class="t body" x="693" y="198">Raw block device</text>
+  <text class="t body" x="693" y="217">readable without</text>
+  <text class="t mono path" x="693" y="243">debugfs</text>
+  <text class="t body" x="693" y="262">/root/root.txt</text>
+
+  <line x1="227" y1="190" x2="241" y2="190" stroke="#6366f1" stroke-width="2" marker-end="url(#dn-arrow)"/>
+  <line x1="442" y1="190" x2="456" y2="190" stroke="#6366f1" stroke-width="2" marker-end="url(#dn-arrow)"/>
+  <line x1="657" y1="190" x2="671" y2="190" stroke="#6366f1" stroke-width="2" marker-end="url(#dn-arrow)"/>
+
+  <text class="t body" x="32" y="322">The final privilege is a group membership, not a root shell — but it is enough to read the root flag.</text>
+</svg>
